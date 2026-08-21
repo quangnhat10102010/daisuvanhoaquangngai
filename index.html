@@ -73,7 +73,7 @@
                     </div>
                     <div class="pt-4 border-t border-gray-100 mt-6">
                         <div class="flex justify-between text-sm text-gray-600 mb-4">
-                            <span>Số lượng: <strong id="questionCountDisplay">200 câu</strong></span>
+                            <span>Số lượng: <strong id="questionCountDisplay">Đang tính...</strong></span>
                             <span>Thời gian: <strong>60 phút</strong></span>
                         </div>
                         <button type="submit" id="btnStartExam" disabled class="w-full bg-brand hover:bg-brand-hover disabled:bg-gray-400 text-white font-bold py-3 px-4 rounded-lg transition shadow-md flex justify-center items-center">
@@ -140,7 +140,7 @@
         <div id="sidebarOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden transition-opacity"></div>
         <div class="flex-1 bg-white sm:rounded-xl shadow-sm sm:border border-gray-200 flex flex-col h-full overflow-hidden min-h-0 z-10 w-full">
             <div class="p-3 sm:p-6 pb-2 sm:pb-3 border-b border-gray-100 flex justify-between items-center bg-white shadow-sm sm:shadow-none z-10 shrink-0">
-                <h2 class="text-base sm:text-xl font-bold text-gray-800" id="questionTitle">CÂU 1 / 200</h2>
+                <h2 class="text-base sm:text-xl font-bold text-gray-800" id="questionTitle">CÂU 1 / ...</h2>
                 <div class="md:hidden flex items-center gap-2">
                     <div class="flex items-center gap-1 bg-brand-light px-2.5 py-1.5 rounded-lg border border-red-100">
                         <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -217,7 +217,7 @@
                 <div class="grid grid-cols-2 gap-4 border-b border-gray-200 pb-4 mb-4">
                     <div class="text-center p-2 border-r border-gray-200">
                         <div class="text-xs sm:text-sm text-gray-500 mb-1">Số câu đúng</div>
-                        <div class="text-xl sm:text-2xl font-bold text-blue-600" id="correctCountDisplay">0 / 200</div>
+                        <div class="text-xl sm:text-2xl font-bold text-blue-600" id="correctCountDisplay">0 / 0</div>
                     </div>
                     <div class="text-center p-2">
                         <div class="text-xs sm:text-sm text-gray-500 mb-1">Điểm số</div>
@@ -1364,13 +1364,13 @@ A. Tự chịu mọi rủi ro phát sinh kể cả trường hợp lỗi từ h�
 B. Thông báo ngay cho cơ quan công an địa phương trước khi thông báo cho Agribank khi có sự cố. 
 C. Bảo đảm bí mật thông tin tài khoản, giao dịch và thông báo kịp thời cho Agribank khi phát hiện sai sót, nhầm lẫn hoặc nghi ngờ bị lợi dụng. 
 D. Phải trực tiếp đến Trụ sở chính tại Hà Nội để xác nhận mọi sai sót liên quan đến giao dịch trực tuyến.
-Đáp án đúng: C 
+ Đáp án đúng: C 
 Câu 186: Hiệu lực thi hành của Quy định số 1139/QĐ-NHNo-KHCN được quy định như thế nào? 
 A. Có hiệu lực thi hành kể từ ngày ký văn bản. 
 B. Có hiệu lực thi hành sau 15 ngày kể từ ngày ký ban hành. 
 C. Có hiệu lực thi hành kể từ ngày đầu tiên của tháng tiếp theo. 
 D. Có hiệu lực thi hành kể từ ngày được đăng công khai trên website.
-Đáp án đúng: A 
+ Đáp án đúng: A 
 Câu 187: Theo nguyên tắc trích tiền tự động, thời điểm hệ thống bắt đầu thực hiện xử lý giao dịch để trích tiền sang tài khoản Tiền gửi sinh lời thông minh diễn ra khi nào? 
 A. Vào thời điểm đầu giờ sáng trước khi mở cửa giao dịch với khách hàng. 
 B. Vào thời điểm cuối ngày làm việc theo lịch cố định của toàn hệ thống. 
@@ -1450,6 +1450,7 @@ B. Quy chế phát hành và sử dụng thẻ tín dụng quốc tế.
 C. Quy định về xử lý nợ xấu tại các tổ chức tín dụng. 
 D. Nội quy lao động áp dụng trong toàn hệ thống Agribank. 
 Đáp án đúng: A 
+
 `;
 
         // Hàm đọc và phân tách file Text thành Array Javascript
@@ -1521,7 +1522,7 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
             
             // Chạy bộ phân tích dữ liệu tự động
             questionsData = parseRawText(RAW_TEXT);
-            TOTAL_QUESTIONS = questionsData.length;
+            TOTAL_QUESTIONS = questionsData.length; // Số lượng câu hỏi tự động lấy từ RAW_TEXT
 
             if(TOTAL_QUESTIONS === 0) {
                  alert("Chưa có câu hỏi nào. Vui lòng dán dữ liệu vào biến RAW_TEXT trong code.");
