@@ -11,176 +11,57 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], },
                     colors: {
-                        brand: {
-                            DEFAULT: '#B0202E', 
-                            hover: '#8C1924',
-                            light: '#F8E8E9'
-                        },
-                        gray: {
-                            bg: '#F3F4F6',
-                            button: '#E5E7EB',
-                            buttonHover: '#D1D5DB'
-                        }
+                        brand: { DEFAULT: '#B0202E', hover: '#8C1924', light: '#F8E8E9' },
+                        gray: { bg: '#F3F4F6', button: '#E5E7EB', buttonHover: '#D1D5DB' }
                     }
                 }
             }
         }
     </script>
     <style>
-        body {
-            background-color: #F8F9FA;
-            color: #333;
-            -webkit-tap-highlight-color: transparent;
-        }
+        body { background-color: #F8F9FA; color: #333; -webkit-tap-highlight-color: transparent; }
+        .question-grid-container::-webkit-scrollbar { width: 6px; }
+        .question-grid-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .question-grid-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         
-        .question-grid-container::-webkit-scrollbar {
-            width: 6px;
-        }
-        .question-grid-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 4px;
-        }
-        .question-grid-container::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-
-        .custom-radio input[type="radio"] {
-            display: none;
-        }
+        .custom-radio input[type="radio"] { display: none; }
+        .custom-radio .radio-mark { width: 20px; height: 20px; border: 1px solid #d1d5db; border-radius: 50%; display: inline-block; position: relative; margin-right: 12px; flex-shrink: 0; background-color: white; transition: all 0.2s; }
+        .custom-radio input[type="radio"]:checked + .radio-mark::after { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; border-radius: 50%; background-color: #4F46E5; }
+        .custom-radio input[type="radio"]:checked + .radio-mark { border-color: #4F46E5; }
         
-        .custom-radio .radio-mark {
-            width: 20px;
-            height: 20px;
-            border: 1px solid #d1d5db;
-            border-radius: 50%;
-            display: inline-block;
-            position: relative;
-            margin-right: 12px;
-            flex-shrink: 0;
-            background-color: white;
-            transition: all 0.2s;
-        }
+        .option-label { transition: all 0.2s; }
+        @media (hover: hover) { .option-label:hover { background-color: #F9FAFB; } }
+        .option-label.selected { border-color: #4F46E5; background-color: #EEF2FF; }
         
-        .custom-radio input[type="radio"]:checked + .radio-mark::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: #4F46E5;
-        }
+        .grid-btn { width: 100%; aspect-ratio: 1; max-width: 36px; display: flex; align-items: center; justify-content: center; border: 1px solid #E5E7EB; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s; background-color: white; color: #374151; margin: auto; }
+        @media (hover: hover) { .grid-btn:hover { background-color: #F3F4F6; } }
+        .grid-btn.current { border: 2px solid #B0202E; font-weight: bold; }
+        .grid-btn.answered { background-color: #3B82F6; color: white; border-color: #3B82F6; }
+        .grid-btn.marked { background-color: #F59E0B; color: white; border-color: #F59E0B; }
+        .grid-btn.answered.marked { background: linear-gradient(135deg, #3B82F6 50%, #F59E0B 50%); color: white; border-color: #374151; }
 
-        .custom-radio input[type="radio"]:checked + .radio-mark {
-            border-color: #4F46E5;
-        }
-
-        .option-label {
-            transition: all 0.2s;
-        }
-        @media (hover: hover) {
-            .option-label:hover {
-                background-color: #F9FAFB;
-            }
-        }
-        
-        .option-label.selected {
-            border-color: #4F46E5;
-            background-color: #EEF2FF;
-        }
-
-        .grid-btn {
-            width: 100%;
-            aspect-ratio: 1;
-            max-width: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #E5E7EB;
-            border-radius: 4px;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            background-color: white;
-            color: #374151;
-            margin: auto;
-        }
-        
-        @media (hover: hover) {
-            .grid-btn:hover {
-                background-color: #F3F4F6;
-            }
-        }
-
-        .grid-btn.current {
-            border: 2px solid #B0202E;
-            font-weight: bold;
-        }
-        .grid-btn.answered {
-            background-color: #3B82F6;
-            color: white;
-            border-color: #3B82F6;
-        }
-        .grid-btn.marked {
-            background-color: #F59E0B;
-            color: white;
-            border-color: #F59E0B;
-        }
-        .grid-btn.answered.marked {
-             background: linear-gradient(135deg, #3B82F6 50%, #F59E0B 50%);
-             color: white;
-             border-color: #374151;
-        }
-
-        #firebaseLoading {
-            position: fixed;
-            inset: 0;
-            background: rgba(255,255,255,0.8);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(4px);
-        }
-        .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border-left-color: #B0202E;
-            animation: spin 1s linear infinite;
-        }
+        #firebaseLoading { position: fixed; inset: 0; background: rgba(255,255,255,0.8); z-index: 100; display: flex; flex-direction: column; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
+        .spinner { border: 4px solid rgba(0, 0, 0, 0.1); width: 40px; height: 40px; border-radius: 50%; border-left-color: #B0202E; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="h-[100dvh] w-screen overflow-hidden flex flex-col font-sans bg-[#F8F9FA]">
 
-    <!-- Overlay Loading -->
     <div id="firebaseLoading">
         <div class="spinner mb-3"></div>
-        <p class="text-gray-600 font-medium" id="loadingText">Đang chuẩn bị bộ câu hỏi...</p>
+        <p class="text-gray-600 font-medium">Đang chuẩn bị bộ câu hỏi...</p>
     </div>
 
-    <!-- MÀN HÌNH ĐĂNG NHẬP -->
     <div id="loginScreen" class="flex-1 flex items-center justify-center p-4 transition-all duration-300">
         <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-md mx-auto relative overflow-hidden">
-            
-            <!-- Khu vực đăng nhập Thí sinh -->
+            <!-- Form Thí sinh -->
             <div id="studentLoginSection" class="transition-all duration-300 transform translate-x-0 w-full">
                 <div class="text-center mb-8">
                     <h1 class="text-2xl font-bold text-gray-800 mb-2">HỆ THỐNG THI TRẮC NGHIỆM</h1>
                     <p class="text-gray-500 text-sm">Vui lòng điền thông tin để bắt đầu</p>
                 </div>
-                
                 <form id="loginForm" class="space-y-4">
                     <div>
                         <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Họ và Tên</label>
@@ -190,32 +71,30 @@
                         <label for="empId" class="block text-sm font-medium text-gray-700 mb-1">Mã CN/Phòng ban</label>
                         <input type="text" id="empId" required class="w-full px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand focus:border-brand outline-none transition" placeholder="Nhập mã...">
                     </div>
-                    
                     <div class="pt-4 border-t border-gray-100 mt-6">
                         <div class="flex justify-between text-sm text-gray-600 mb-4">
-                            <span>Số lượng: <strong id="questionCountDisplay">Đang tải...</strong></span>
+                            <span>Số lượng: <strong id="questionCountDisplay">200 câu</strong></span>
                             <span>Thời gian: <strong>60 phút</strong></span>
                         </div>
-                        <button type="submit" id="btnStartExam" class="w-full bg-brand hover:bg-brand-hover disabled:bg-gray-400 text-white font-bold py-3 px-4 rounded-lg transition shadow-md flex justify-center items-center">
+                        <button type="submit" id="btnStartExam" disabled class="w-full bg-brand hover:bg-brand-hover disabled:bg-gray-400 text-white font-bold py-3 px-4 rounded-lg transition shadow-md flex justify-center items-center">
                             BẮT ĐẦU THI
                         </button>
                     </div>
                 </form>
                 <div class="mt-5 text-center">
-                    <button id="btnShowAdminLogin" type="button" class="text-sm text-gray-500 hover:text-brand transition underline-offset-2 hover:underline focus:outline-none">Bạn là Quản trị viên?</button>
+                    <button id="btnShowAdminLogin" class="text-sm text-gray-500 hover:text-brand transition underline-offset-2 hover:underline focus:outline-none">Bạn là Quản trị viên?</button>
                 </div>
             </div>
 
-            <!-- Khu vực đăng nhập Admin -->
+            <!-- Form Admin -->
             <div id="adminLoginSection" class="hidden transition-all duration-300 transform translate-x-full absolute inset-0 p-6 sm:p-8 bg-white z-10 flex flex-col justify-center">
                 <div class="text-center mb-8">
                     <div class="inline-flex items-center justify-center w-12 h-12 bg-gray-100 text-gray-800 rounded-full mb-3">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8V7z"></path></svg>
                     </div>
                     <h1 class="text-2xl font-bold text-gray-800 mb-2">QUẢN TRỊ VIÊN</h1>
-                    <p class="text-gray-500 text-sm">Đăng nhập để xem kết quả thi</p>
+                    <p class="text-gray-500 text-sm">Đăng nhập để vào khu vực quản trị</p>
                 </div>
-                
                 <form id="adminForm" class="space-y-4">
                     <div>
                         <label for="adminUsername" class="block text-sm font-medium text-gray-700 mb-1">Tài khoản</label>
@@ -225,7 +104,6 @@
                         <label for="adminPassword" class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
                         <input type="password" id="adminPassword" required class="w-full px-4 py-2 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-800 focus:border-gray-800 outline-none transition" placeholder="Mật khẩu...">
                     </div>
-                    
                     <div class="pt-4 mt-2">
                         <button type="submit" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-4 rounded-lg transition shadow-md flex justify-center items-center">
                             ĐĂNG NHẬP
@@ -233,70 +111,36 @@
                     </div>
                 </form>
                 <div class="mt-5 text-center">
-                    <button id="btnShowStudentLogin" type="button" class="text-sm text-gray-500 hover:text-gray-800 transition underline-offset-2 hover:underline focus:outline-none">&larr; Quay lại trang Thí sinh</button>
+                    <button id="btnShowStudentLogin" class="text-sm text-gray-500 hover:text-gray-800 transition underline-offset-2 hover:underline focus:outline-none">&larr; Quay lại trang Thí sinh</button>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <!-- MÀN HÌNH ADMIN QUẢN TRỊ -->
     <div id="adminScreen" class="hidden flex-1 overflow-hidden flex flex-col p-4 sm:p-8 bg-gray-50">
         <div class="max-w-6xl mx-auto w-full flex-1 flex flex-col bg-white rounded-xl shadow-lg overflow-hidden">
             <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-800 text-white">
-                <h2 class="text-xl font-bold">Khu Vực Quản Trị - Kết Quả Thi</h2>
+                <h2 class="text-xl font-bold">Khu Vực Quản Trị</h2>
                 <button id="btnExitAdmin" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm transition">Đóng Admin</button>
             </div>
-            
-            <div class="p-4 bg-yellow-50 border-b border-yellow-200 text-sm text-yellow-800 leading-relaxed">
-                <strong class="text-yellow-900">🔔 LƯU Ý QUAN TRỌNG:</strong> Bảng bên dưới chỉ hiển thị kết quả của những người đã thi trên <b>chính chiếc máy tính/điện thoại này</b>.<br>
-                👉 Để xem kết quả thi của <b>TẤT CẢ MỌI NGƯỜI</b>, vui lòng mở file <b>Google Sheet (Excel)</b> trên Google Drive của bạn!
-            </div>
-            
-            <div class="p-4 bg-white border-b border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div class="bg-blue-50 p-3 rounded-lg border border-blue-100 w-full sm:w-auto opacity-50 cursor-not-allowed">
-                    <h3 class="font-bold text-blue-800 mb-1">Cập nhật Bộ Câu Hỏi (Đã khóa)</h3>
-                    <p class="text-[11px] sm:text-xs text-blue-600 mb-2">Tính năng tải Excel đang tạm khóa vì dùng đề cố định.</p>
+            <div class="p-6 text-center">
+                <div class="mb-4 inline-block p-4 bg-yellow-100 rounded-full text-yellow-600">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
-                
-                <div class="flex flex-col items-end gap-2 w-full sm:w-auto">
-                    <p class="text-sm text-gray-600">Tổng số bài nộp: <span id="adminTotalSubmissions" class="font-bold text-gray-900">0</span></p>
-                    <button id="btnRefreshAdmin" class="px-3 py-1.5 bg-white border border-gray-300 rounded-md text-sm hover:bg-gray-50 flex items-center gap-1">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                        Làm mới kết quả
-                    </button>
-                </div>
-            </div>
-
-            <div class="flex-1 overflow-auto">
-                <table class="w-full text-left border-collapse min-w-[700px]">
-                    <thead>
-                        <tr class="bg-gray-100 text-gray-600 uppercase text-xs tracking-wider">
-                            <th class="p-4 border-b font-semibold">Thời gian nộp</th>
-                            <th class="p-4 border-b font-semibold">Họ và Tên</th>
-                            <th class="p-4 border-b font-semibold">Mã NV</th>
-                            <th class="p-4 border-b font-semibold text-center">Thời gian làm</th>
-                            <th class="p-4 border-b font-semibold text-center">Số câu đúng</th>
-                            <th class="p-4 border-b font-semibold text-center">Điểm số</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminTableBody">
-                        <!-- Data will be injected here -->
-                    </tbody>
-                </table>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Thông báo quan trọng</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed text-lg">
+                    Kết quả thi của thí sinh được tự động gửi thẳng về <b>Google Sheet</b> của bạn để đảm bảo an toàn và không bị mất dữ liệu khi dùng điện thoại.<br><br>
+                    👉 Vui lòng mở file <b>Excel trên Google Drive</b> của bạn để xem toàn bộ danh sách điểm số nhé!
+                </p>
             </div>
         </div>
     </div>
 
-    <!-- MÀN HÌNH THI -->
     <div id="examScreen" class="hidden flex-1 w-full max-w-7xl mx-auto p-0 sm:p-4 flex flex-col md:flex-row gap-0 sm:gap-4 transition-all duration-300 relative min-h-0">
-        
         <div id="sidebarOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden transition-opacity"></div>
-
         <div class="flex-1 bg-white sm:rounded-xl shadow-sm sm:border border-gray-200 flex flex-col h-full overflow-hidden min-h-0 z-10 w-full">
             <div class="p-3 sm:p-6 pb-2 sm:pb-3 border-b border-gray-100 flex justify-between items-center bg-white shadow-sm sm:shadow-none z-10 shrink-0">
-                <h2 class="text-base sm:text-xl font-bold text-gray-800" id="questionTitle">CÂU 1</h2>
-                
+                <h2 class="text-base sm:text-xl font-bold text-gray-800" id="questionTitle">CÂU 1 / 200</h2>
                 <div class="md:hidden flex items-center gap-2">
                     <div class="flex items-center gap-1 bg-brand-light px-2.5 py-1.5 rounded-lg border border-red-100">
                         <svg class="w-4 h-4 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -309,7 +153,7 @@
             </div>
             
             <div class="p-4 sm:p-6 flex-1 overflow-y-auto">
-                <p class="text-gray-800 text-[15px] sm:text-base leading-relaxed mb-5" id="questionContent">Đang tải câu hỏi...</p>
+                <p class="text-gray-800 text-[15px] sm:text-base leading-relaxed mb-5 font-medium" id="questionContent">Đang tải câu hỏi...</p>
                 <div class="space-y-2.5 sm:space-y-3" id="optionsContainer"></div>
             </div>
 
@@ -340,16 +184,13 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
-
             <div class="hidden md:block p-5 text-center border-b border-gray-100 shrink-0">
                 <div class="text-4xl font-extrabold text-gray-900 tracking-wider font-mono" id="timerDisplay">60:00</div>
             </div>
-            
             <div class="px-4 py-2.5 border-b border-gray-100 bg-gray-50 flex justify-between items-center text-sm shrink-0">
                 <span class="font-medium text-gray-700 truncate max-w-[60%]" id="displayUserName">Thí sinh</span>
                 <span class="text-gray-500" id="answeredCountInfo">Đã làm: 0</span>
             </div>
-
             <div class="p-3 sm:p-4 pb-2 shrink-0">
                 <h3 class="font-bold text-gray-800 hidden md:block mb-2">Danh sách câu hỏi</h3>
                 <div class="flex flex-wrap gap-2 text-[11px] sm:text-xs text-gray-600 justify-center">
@@ -358,14 +199,12 @@
                     <div class="flex items-center gap-1"><span class="w-2.5 h-2.5 bg-white border border-red-700 rounded-sm inline-block"></span> Đang xem</div>
                 </div>
             </div>
-
             <div class="p-3 sm:p-4 pt-1 flex-1 overflow-y-auto question-grid-container">
                 <div class="grid grid-cols-6 sm:grid-cols-8 md:grid-cols-6 lg:grid-cols-8 gap-1.5 sm:gap-2" id="questionGrid"></div>
             </div>
         </div>
     </div>
 
-    <!-- MÀN HÌNH NHẬN KẾT QUẢ -->
     <div id="resultScreen" class="hidden flex-1 w-full flex items-center justify-center p-4">
         <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-md mx-auto text-center">
             <div class="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
@@ -378,7 +217,7 @@
                 <div class="grid grid-cols-2 gap-4 border-b border-gray-200 pb-4 mb-4">
                     <div class="text-center p-2 border-r border-gray-200">
                         <div class="text-xs sm:text-sm text-gray-500 mb-1">Số câu đúng</div>
-                        <div class="text-xl sm:text-2xl font-bold text-blue-600" id="correctCountDisplay">0</div>
+                        <div class="text-xl sm:text-2xl font-bold text-blue-600" id="correctCountDisplay">0 / 200</div>
                     </div>
                     <div class="text-center p-2">
                         <div class="text-xs sm:text-sm text-gray-500 mb-1">Điểm số</div>
@@ -409,7 +248,6 @@
         </div>
     </div>
 
-    <!-- MÀN HÌNH XEM LẠI BÀI LÀM -->
     <div id="reviewScreen" class="hidden flex-1 w-full max-w-5xl mx-auto p-2 sm:p-4 flex flex-col h-full overflow-hidden">
         <div class="bg-white p-4 sm:p-5 rounded-t-xl shadow-sm border-b border-gray-200 flex justify-between items-center shrink-0">
             <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center gap-2">
@@ -419,11 +257,9 @@
             <button id="btnCloseReview" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-sm font-medium transition text-gray-800">Quay lại kết quả</button>
         </div>
         <div class="bg-white p-4 sm:p-6 rounded-b-xl shadow-sm flex-1 overflow-y-auto space-y-4 sm:space-y-6" id="reviewContainer">
-            <!-- Dữ liệu review sẽ được tạo bằng JS -->
         </div>
     </div>
 
-    <!-- MODAL XÁC NHẬN NỘP BÀI -->
     <div id="confirmModal" class="hidden fixed inset-0 bg-black bg-opacity-60 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-xl p-5 sm:p-6 max-w-sm w-full shadow-2xl transform transition-all">
             <h3 class="text-lg font-bold text-gray-900 mb-2">Xác nhận nộp bài</h3>
@@ -439,9 +275,9 @@
     </div>
 
     <script type="module">
-        // === CẤU HÌNH GOOGLE FORM ===
+        // === CẤU HÌNH LƯU KẾT QUẢ QUA GOOGLE FORM ===
         const GOOGLE_FORM_CONFIG = {
-            enabled: true, 
+            enabled: true, // BẬT GỬI VỀ GOOGLE FORM
             formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfcdscLJC-VRjqMdDE9Vacrk_8pMjeR6hE2wf5mQoGZawrh_g/formResponse", 
             entries: {
                 userName: "entry.1068873649",
@@ -452,7 +288,16 @@
             }
         };
 
-        const RAW_TEXT = `Câu 1: Theo Quy định, khái niệm "Giám sát dữ liệu trên mạng xã hội và Internet" đối với Agribank bao gồm việc thu thập thông tin, thảo luận liên quan đến sản phẩm dịch vụ, thương hiệu, văn hóa, hoạt động của Agribank và các tổ chức khác nhằm mục đích nào sau đây?
+        // =========================================================================================
+        // BỘ ĐỌC DỮ LIỆU TỰ ĐỘNG (AUTO-PARSER) BẢO VỆ MÃ NGUỒN KHÔNG BỊ LỖI
+        // -----------------------------------------------------------------------------------------
+        // HƯỚNG DẪN: BẠN HÃY COPY TOÀN BỘ NỘI DUNG 200 CÂU TRONG FILE WORD "De11" 
+        // VÀ DÁN ĐÈ LÊN PHẦN CHỮ Ở GIỮA HAI DẤU ` (Backtick) DƯỚI ĐÂY.
+        // TÔI ĐÃ LÀM MẪU 10 CÂU ĐẦU TIÊN ĐỂ WEB CHẠY ĐƯỢC NGAY.
+        // =========================================================================================
+
+        const RAW_TEXT = `
+Câu 1: Theo Quy định, khái niệm "Giám sát dữ liệu trên mạng xã hội và Internet" đối với Agribank bao gồm việc thu thập thông tin, thảo luận liên quan đến sản phẩm dịch vụ, thương hiệu, văn hóa, hoạt động của Agribank và các tổ chức khác nhằm mục đích nào sau đây?
 A. Làm dữ liệu đầu vào phục vụ cho hoạt động nội bộ, hỗ trợ khách hàng qua kênh mạng xã hội, cảnh báo khủng hoảng và phân tích dữ liệu.
 B. Báo cáo trực tiếp lên Ngân hàng Nhà nước để điều chỉnh các chính sách lãi suất và tín dụng chung toàn ngành.
 C. Tổng hợp thông tin cạnh tranh thị phần để lập kế hoạch kinh doanh ngắn hạn cho từng phòng giao dịch trực thuộc.
@@ -1519,13 +1364,13 @@ A. Tự chịu mọi rủi ro phát sinh kể cả trường hợp lỗi từ h�
 B. Thông báo ngay cho cơ quan công an địa phương trước khi thông báo cho Agribank khi có sự cố. 
 C. Bảo đảm bí mật thông tin tài khoản, giao dịch và thông báo kịp thời cho Agribank khi phát hiện sai sót, nhầm lẫn hoặc nghi ngờ bị lợi dụng. 
 D. Phải trực tiếp đến Trụ sở chính tại Hà Nội để xác nhận mọi sai sót liên quan đến giao dịch trực tuyến.
- Đáp án đúng: C 
+Đáp án đúng: C 
 Câu 186: Hiệu lực thi hành của Quy định số 1139/QĐ-NHNo-KHCN được quy định như thế nào? 
 A. Có hiệu lực thi hành kể từ ngày ký văn bản. 
 B. Có hiệu lực thi hành sau 15 ngày kể từ ngày ký ban hành. 
 C. Có hiệu lực thi hành kể từ ngày đầu tiên của tháng tiếp theo. 
 D. Có hiệu lực thi hành kể từ ngày được đăng công khai trên website.
- Đáp án đúng: A 
+Đáp án đúng: A 
 Câu 187: Theo nguyên tắc trích tiền tự động, thời điểm hệ thống bắt đầu thực hiện xử lý giao dịch để trích tiền sang tài khoản Tiền gửi sinh lời thông minh diễn ra khi nào? 
 A. Vào thời điểm đầu giờ sáng trước khi mở cửa giao dịch với khách hàng. 
 B. Vào thời điểm cuối ngày làm việc theo lịch cố định của toàn hệ thống. 
@@ -1607,82 +1452,55 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
 Đáp án đúng: A 
 `;
 
-        function parseAndShuffleQuestions(text) {
-            const allQuestions = [];
-            const blocks = text.split(/\nCâu \d+[\.\:]/g).filter(b => b.trim().length > 0);
+        // Hàm đọc và phân tách file Text thành Array Javascript
+        function parseRawText(rawText) {
+            const questions = [];
+            // Cắt nội dung thành từng câu dựa trên chữ "Câu X:"
+            const blocks = rawText.split(/(?:Câu|Cau)\s*\d+[\.:]/gi);
+            
+            for (let i = 1; i < blocks.length; i++) {
+                let block = blocks[i].trim();
+                if (!block) continue;
 
-            blocks.forEach((block) => {
-                const lines = block.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-                let content = "";
-                let options = ["", "", "", ""];
-                let correctIndex = 0;
-                let currentOption = -1;
-
-                for (let i = 0; i < lines.length; i++) {
-                    const line = lines[i];
-                    if (line.startsWith('A.')) { options[0] = line.substring(2).trim(); currentOption = 0; }
-                    else if (line.startsWith('B.')) { options[1] = line.substring(2).trim(); currentOption = 1; }
-                    else if (line.startsWith('C.')) { options[2] = line.substring(2).trim(); currentOption = 2; }
-                    else if (line.startsWith('D.')) { options[3] = line.substring(2).trim(); currentOption = 3; }
-                    else if (line.toLowerCase().includes('đáp án')) {
-                        let match = line.match(/[A-D]/i); 
-                        if (match) {
-                            let ans = match[0].toUpperCase();
-                            if (ans === 'A') correctIndex = 0;
-                            else if (ans === 'B') correctIndex = 1;
-                            else if (ans === 'C') correctIndex = 2;
-                            else if (ans === 'D') correctIndex = 3;
-                        }
-                    } else {
-                        if (currentOption === -1) {
-                            content += (content.length > 0 ? " " : "") + line;
-                        } else {
-                            options[currentOption] += " " + line;
-                        }
-                    }
+                // Tìm đáp án
+                const ansMatch = block.match(/(?:Đáp án|Đáp án đúng|ĐÁP ÁN ĐÚNG|ĐÁP ÁN)[\s:]*([A-D])/i);
+                let ansIndex = 0;
+                if (ansMatch) {
+                    const ansChar = ansMatch[1].toUpperCase();
+                    if (ansChar === 'B') ansIndex = 1;
+                    else if (ansChar === 'C') ansIndex = 2;
+                    else if (ansChar === 'D') ansIndex = 3;
                 }
+
+                // Cắt bỏ phần sau chữ "Đáp án"
+                const cleanBlock = ansMatch ? block.substring(0, ansMatch.index) : block;
                 
-                if (content && options[0] && options[1]) {
-                     allQuestions.push({
-                        content: content,
-                        options: options,
-                        correctAnswerIndex: correctIndex
+                // Trích xuất các option A, B, C, D bằng Regex an toàn
+                const optRegex = /A\.\s*([\s\S]*?)B\.\s*([\s\S]*?)C\.\s*([\s\S]*?)D\.\s*([\s\S]*)/i;
+                const match = cleanBlock.match(optRegex);
+                
+                if (match) {
+                    questions.push({
+                        id: questions.length + 1,
+                        content: cleanBlock.substring(0, match.index).trim(),
+                        options: [match[1].trim(), match[2].trim(), match[3].trim(), match[4].trim()],
+                        correctAnswerIndex: ansIndex
                     });
                 }
-            });
-
-            // Xáo trộn 200 câu hỏi mỗi lần tải trang
-            for (let i = allQuestions.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [allQuestions[i], allQuestions[j]] = [allQuestions[j], allQuestions[i]];
             }
-
-            return allQuestions.map((q, index) => {
-                return {
-                    id: index + 1,
-                    content: q.content,
-                    options: q.options,
-                    correctAnswerIndex: q.correctAnswerIndex
-                };
-            });
+            return questions;
         }
 
-        const MY_REAL_QUESTIONS = parseAndShuffleQuestions(RAW_TEXT);
-        
-        let TOTAL_QUESTIONS = MY_REAL_QUESTIONS.length;
+        // --- CẤU HÌNH BÀI THI ---
         const EXAM_TIME_MINUTES = 60;
+        let TOTAL_QUESTIONS = 0;
         let questionsData = []; 
         let isSaving = false;
         
         const gameState = {
-            userId: null,
             userInfo: { name: '', id: '' },
-            currentQuestionIndex: 0,
-            answers: [],
-            marked: [],
-            timeRemaining: EXAM_TIME_MINUTES * 60,
-            timerInterval: null,
-            isFinished: false
+            currentQuestionIndex: 0, answers: [], marked: [],
+            timeRemaining: EXAM_TIME_MINUTES * 60, timerInterval: null, isFinished: false
         };
 
         const UI = {
@@ -1694,90 +1512,83 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
                 review: document.getElementById('reviewScreen')
             },
             btnStartExam: document.getElementById('btnStartExam'),
-            loadingOverlay: document.getElementById('firebaseLoading'),
-            admin: {
-                sectionStudent: document.getElementById('studentLoginSection'),
-                sectionAdmin: document.getElementById('adminLoginSection'),
-                btnShowAdmin: document.getElementById('btnShowAdminLogin'),
-                btnShowStudent: document.getElementById('btnShowStudentLogin'),
-                formLogin: document.getElementById('adminForm'),
-                btnExit: document.getElementById('btnExitAdmin'),
-                btnRefresh: document.getElementById('btnRefreshAdmin'),
-                tableBody: document.getElementById('adminTableBody'),
-                totalSpan: document.getElementById('adminTotalSubmissions')
-            }
+            loadingOverlay: document.getElementById('firebaseLoading')
         };
 
+        // --- KHỞI TẠO DỮ LIỆU ---
         async function initApp() {
             setupEventListeners();
             
-            console.log("Đang chạy chế độ Offline với bộ " + MY_REAL_QUESTIONS.length + " câu hỏi ngẫu nhiên.");
-            gameState.userId = "local_user_" + Date.now();
-            await fetchQuestionsFromDB();
-        }
-
-        async function fetchQuestionsFromDB() {
-            questionsData = MY_REAL_QUESTIONS;
+            // Chạy bộ phân tích dữ liệu tự động
+            questionsData = parseRawText(RAW_TEXT);
             TOTAL_QUESTIONS = questionsData.length;
-            gameState.answers = new Array(TOTAL_QUESTIONS).fill(null);
-            gameState.marked = new Array(TOTAL_QUESTIONS).fill(false);
-            
-            const totalInfoEl = document.getElementById('questionCountDisplay');
-            if(totalInfoEl) totalInfoEl.textContent = `${TOTAL_QUESTIONS} câu`;
-            
+
+            if(TOTAL_QUESTIONS === 0) {
+                 alert("Chưa có câu hỏi nào. Vui lòng dán dữ liệu vào biến RAW_TEXT trong code.");
+            } else {
+                 document.getElementById('questionCountDisplay').textContent = `${TOTAL_QUESTIONS} câu`;
+                 gameState.answers = new Array(TOTAL_QUESTIONS).fill(null);
+                 gameState.marked = new Array(TOTAL_QUESTIONS).fill(false);
+                 UI.btnStartExam.disabled = false;
+            }
+
             UI.loadingOverlay.style.display = 'none';
         }
 
         function setupEventListeners() {
             document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            
             document.getElementById('btnPrev').addEventListener('click', () => changeQuestion(-1));
             document.getElementById('btnNext').addEventListener('click', () => changeQuestion(1));
             document.getElementById('btnMark').addEventListener('click', toggleMarkCurrentQuestion);
             document.getElementById('btnSubmit').addEventListener('click', requestSubmit);
+            
             document.getElementById('btnCancelSubmit').addEventListener('click', closeConfirmModal);
             document.getElementById('btnConfirmSubmit').addEventListener('click', finishExam);
             document.getElementById('btnExportResult').addEventListener('click', exportResultToCSV);
             document.getElementById('btnReviewExam').addEventListener('click', showReviewScreen);
-            document.getElementById('btnCloseReview').addEventListener('click', hideReviewScreen);
+            document.getElementById('btnCloseReview').addEventListener('click', closeReviewScreen);
 
             document.getElementById('btnOpenSidebar').addEventListener('click', openSidebar);
             document.getElementById('btnCloseSidebar').addEventListener('click', closeSidebar);
             document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
+
+            // Admin Events
+            document.getElementById('btnShowAdminLogin').addEventListener('click', showAdminLogin);
+            document.getElementById('btnShowStudentLogin').addEventListener('click', showStudentLogin);
+            document.getElementById('adminForm').addEventListener('submit', handleAdminLogin);
             
-            UI.admin.btnShowAdmin.addEventListener('click', showAdminLogin);
-            UI.admin.btnShowStudent.addEventListener('click', showStudentLogin);
-            UI.admin.formLogin.addEventListener('submit', handleAdminLogin);
-            UI.admin.btnExit.addEventListener('click', () => {
+            document.getElementById('btnExitAdmin').addEventListener('click', () => {
                 UI.screens.admin.classList.add('hidden');
                 UI.screens.login.classList.remove('hidden');
                 showStudentLogin();
             });
-            UI.admin.btnRefresh.addEventListener('click', loadAdminData);
         }
 
+        // --- ADMIN LOGIC ---
         function showAdminLogin() {
-            UI.admin.sectionStudent.classList.add('opacity-0', '-translate-x-full');
+            document.getElementById('studentLoginSection').classList.add('opacity-0', '-translate-x-full');
             setTimeout(() => {
-                UI.admin.sectionStudent.classList.add('hidden');
-                UI.admin.sectionAdmin.classList.remove('hidden');
-                void UI.admin.sectionAdmin.offsetWidth;
-                UI.admin.sectionAdmin.classList.remove('translate-x-full');
-                UI.admin.sectionAdmin.classList.add('translate-x-0');
+                document.getElementById('studentLoginSection').classList.add('hidden');
+                document.getElementById('adminLoginSection').classList.remove('hidden');
+                void document.getElementById('adminLoginSection').offsetWidth;
+                document.getElementById('adminLoginSection').classList.remove('translate-x-full');
+                document.getElementById('adminLoginSection').classList.add('translate-x-0');
             }, 300);
         }
 
         function showStudentLogin() {
-            UI.admin.sectionAdmin.classList.remove('translate-x-0');
-            UI.admin.sectionAdmin.classList.add('translate-x-full');
+            document.getElementById('adminLoginSection').classList.remove('translate-x-0');
+            document.getElementById('adminLoginSection').classList.add('translate-x-full');
             setTimeout(() => {
-                UI.admin.sectionAdmin.classList.add('hidden');
-                UI.admin.sectionStudent.classList.remove('hidden');
-                void UI.admin.sectionStudent.offsetWidth;
-                UI.admin.sectionStudent.classList.remove('-translate-x-full', 'opacity-0');
+                document.getElementById('adminLoginSection').classList.add('hidden');
+                document.getElementById('studentLoginSection').classList.remove('hidden');
+                void document.getElementById('studentLoginSection').offsetWidth;
+                document.getElementById('studentLoginSection').classList.remove('-translate-x-full', 'opacity-0');
             }, 300);
         }
 
-        async function handleAdminLogin(e) {
+        function handleAdminLogin(e) {
             e.preventDefault();
             const user = document.getElementById('adminUsername').value.trim();
             const pass = document.getElementById('adminPassword').value.trim();
@@ -1785,60 +1596,15 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
             if(user === "admin" && pass === "admin123") {
                 UI.screens.login.classList.add('hidden');
                 UI.screens.admin.classList.remove('hidden');
-                document.body.classList.remove('h-[100dvh]'); 
+                document.body.classList.remove('h-[100dvh]');
                 document.getElementById('adminUsername').value = '';
                 document.getElementById('adminPassword').value = '';
-                await loadAdminData();
             } else {
-                alert("Tài khoản/Mật khẩu sai!");
+                alert("Tài khoản hoặc mật khẩu không chính xác!");
             }
         }
 
-        async function loadAdminData() {
-            const tbody = document.getElementById('adminTableBody');
-            if (!tbody) return;
-            tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-gray-500">Đang tải dữ liệu...</td></tr>';
-            
-            try {
-                let results = [];
-                const localRes = localStorage.getItem('thidaisu_results');
-                if (localRes) results = JSON.parse(localRes);
-
-                results.sort((a, b) => b.timestamp - a.timestamp);
-                UI.admin.totalSpan.textContent = results.length;
-                tbody.innerHTML = '';
-
-                if(results.length === 0) {
-                     tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-gray-500">Chưa có bài nộp nào trên thiết bị này. <br>Hãy kiểm tra trên file Google Sheet của bạn.</td></tr>';
-                     return;
-                }
-
-                results.forEach(res => {
-                    const date = new Date(res.timestamp);
-                    const dateStr = date.toLocaleString('vi-VN', { hour: '2-digit', minute:'2-digit', day:'2-digit', month:'2-digit', year:'numeric' });
-                    const timeTaken = res.timeTakenSeconds || 0;
-                    const min = Math.floor(timeTaken / 60);
-                    const sec = timeTaken % 60;
-                    const timeTakenStr = `${min} phút ${sec} giây`;
-                    
-                    const tr = document.createElement('tr');
-                    tr.className = 'hover:bg-gray-50 transition';
-                    tr.innerHTML = `
-                        <td class="p-4 border-b text-sm text-gray-600">${dateStr}</td>
-                        <td class="p-4 border-b text-sm font-medium text-gray-900">${res.userName}</td>
-                        <td class="p-4 border-b text-sm text-gray-600">${res.empId}</td>
-                        <td class="p-4 border-b text-sm text-center text-gray-700">${timeTakenStr}</td>
-                        <td class="p-4 border-b text-sm text-center font-medium">${res.correctCount}/${res.totalQuestions || TOTAL_QUESTIONS}</td>
-                        <td class="p-4 border-b text-sm text-center font-bold text-brand">${res.score.toFixed(1)}</td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-
-            } catch (error) {
-                tbody.innerHTML = '<tr><td colspan="6" class="p-4 text-center text-red-500">Lỗi không thể tải dữ liệu (Offline). Tuy nhiên, kết quả Google Form vẫn hoạt động.</td></tr>';
-            }
-        }
-
+        // --- UI & EXAM LOGIC ---
         function openSidebar() {
             document.getElementById('rightSidebar').classList.remove('translate-x-full');
             document.getElementById('sidebarOverlay').classList.remove('hidden');
@@ -1853,7 +1619,6 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
             const name = document.getElementById('fullName').value.trim();
             const empId = document.getElementById('empId').value.trim();
             if (name && empId) {
-                if(!gameState.userId) gameState.userId = "local_user_" + Date.now();
                 gameState.userInfo = { name, id: empId };
                 document.getElementById('displayUserName').textContent = name;
                 UI.screens.login.classList.add('hidden');
@@ -1901,31 +1666,20 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
                 
                 const radioInput = document.createElement('div');
                 radioInput.className = 'custom-radio mt-0.5';
-                
                 const input = document.createElement('input');
-                input.type = 'radio';
-                input.name = `question_${index}`;
-                input.value = optIndex;
-                input.checked = isSelected;
+                input.type = 'radio'; input.name = `question_${index}`; input.value = optIndex; input.checked = isSelected;
                 input.onchange = () => selectOption(index, optIndex, label);
-
-                const mark = document.createElement('span');
-                mark.className = 'radio-mark';
+                const mark = document.createElement('span'); mark.className = 'radio-mark';
                 
-                radioInput.appendChild(input);
-                radioInput.appendChild(mark);
-                
-                const textDiv = document.createElement('div');
-                textDiv.className = 'flex-1 text-gray-700 leading-snug text-sm sm:text-base';
+                radioInput.appendChild(input); radioInput.appendChild(mark);
+                const textDiv = document.createElement('div'); textDiv.className = 'flex-1 text-gray-700 leading-snug text-sm sm:text-base';
                 textDiv.innerHTML = `<span class="font-bold mr-1">${letters[optIndex]}.</span> ${optText}`;
                 
-                label.appendChild(radioInput);
-                label.appendChild(textDiv);
+                label.appendChild(radioInput); label.appendChild(textDiv);
                 optionsContainer.appendChild(label);
             });
 
             updateGridButtonsUI();
-            
             document.getElementById('btnPrev').disabled = index === 0;
             document.getElementById('btnPrev').style.opacity = index === 0 ? '0.5' : '1';
             document.getElementById('btnNext').disabled = index === TOTAL_QUESTIONS - 1;
@@ -1947,8 +1701,7 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
             });
             selectedLabelElement.classList.remove('border-gray-200');
             selectedLabelElement.classList.add('selected');
-            updateGridButtonsUI();
-            updateAnsweredCount();
+            updateGridButtonsUI(); updateAnsweredCount();
         }
 
         function toggleMarkCurrentQuestion() {
@@ -1981,37 +1734,23 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
         function startTimer() {
             updateTimerDisplay();
             gameState.timerInterval = setInterval(() => {
-                gameState.timeRemaining--;
-                updateTimerDisplay();
-                if (gameState.timeRemaining <= 0) {
-                    clearInterval(gameState.timerInterval);
-                    autoSubmit();
-                }
+                gameState.timeRemaining--; updateTimerDisplay();
+                if (gameState.timeRemaining <= 0) { clearInterval(gameState.timerInterval); autoSubmit(); }
             }, 1000);
         }
 
         function updateTimerDisplay() {
             const m = Math.floor(gameState.timeRemaining / 60).toString().padStart(2, '0');
             const s = (gameState.timeRemaining % 60).toString().padStart(2, '0');
-            const timeStr = `${m}:${s}`;
-            const timer = document.getElementById('timerDisplay');
-            const mobileTimer = document.getElementById('mobileTimerDisplay');
-            timer.textContent = timeStr;
-            mobileTimer.textContent = timeStr;
-            if (gameState.timeRemaining < 300) { 
-                timer.classList.add('text-red-600'); timer.classList.remove('text-gray-900');
-                mobileTimer.classList.add('text-red-600'); mobileTimer.classList.remove('text-brand');
-            }
+            document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+            document.getElementById('mobileTimerDisplay').textContent = `${m}:${s}`;
         }
 
         function requestSubmit() {
             const answered = gameState.answers.filter(ans => ans !== null).length;
             const unanswered = TOTAL_QUESTIONS - answered;
-            if (unanswered > 0) {
-                document.getElementById('confirmMsg').innerHTML = `Bạn còn <strong>${unanswered}</strong> câu chưa trả lời. Bạn có chắc chắn muốn nộp bài?`;
-            } else {
-                document.getElementById('confirmMsg').textContent = `Bạn đã trả lời đủ ${TOTAL_QUESTIONS} câu. Xác nhận nộp bài?`;
-            }
+            if (unanswered > 0) document.getElementById('confirmMsg').innerHTML = `Bạn còn <strong>${unanswered}</strong> câu chưa trả lời. Bạn có chắc chắn muốn nộp bài lúc này?`;
+            else document.getElementById('confirmMsg').textContent = `Bạn đã trả lời đủ ${TOTAL_QUESTIONS} câu. Xác nhận nộp bài?`;
             document.getElementById('confirmModal').classList.remove('hidden');
         }
 
@@ -2034,20 +1773,15 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
             
             const btnSubmit = document.getElementById('btnConfirmSubmit');
             const spinner = document.getElementById('submitSpinner');
-            btnSubmit.disabled = true;
-            btnSubmit.classList.add('opacity-80');
-            spinner.classList.remove('hidden');
+            btnSubmit.disabled = true; btnSubmit.classList.add('opacity-80'); spinner.classList.remove('hidden');
             
             let correctCount = 0;
             for (let i = 0; i < TOTAL_QUESTIONS; i++) {
-                if (gameState.answers[i] === questionsData[i].correctAnswerIndex) {
-                    correctCount++;
-                }
+                if (gameState.answers[i] === questionsData[i].correctAnswerIndex) correctCount++;
             }
             const score = (correctCount / TOTAL_QUESTIONS) * 10;
             const timeTaken = (EXAM_TIME_MINUTES * 60) - gameState.timeRemaining;
-            const minTaken = Math.floor(timeTaken / 60);
-            const secTaken = timeTaken % 60;
+            const minTaken = Math.floor(timeTaken / 60); const secTaken = timeTaken % 60;
 
             if (GOOGLE_FORM_CONFIG.enabled) {
                 try {
@@ -2057,33 +1791,11 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
                     formData.append(GOOGLE_FORM_CONFIG.entries.score, score.toFixed(1));
                     formData.append(GOOGLE_FORM_CONFIG.entries.correctCount, `${correctCount} / ${TOTAL_QUESTIONS}`);
                     formData.append(GOOGLE_FORM_CONFIG.entries.timeTaken, `${minTaken} phút ${secTaken} giây`);
-
-                    fetch(GOOGLE_FORM_CONFIG.formUrl, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        body: formData
-                    }).catch(e => console.log("Form request sent."));
-                } catch(e) { console.error("Form send error"); }
+                    fetch(GOOGLE_FORM_CONFIG.formUrl, { method: 'POST', mode: 'no-cors', body: formData }).catch(e => console.log(e));
+                } catch(e) {}
             }
 
-            try {
-                const resObj = {
-                    userId: gameState.userId,
-                    userName: gameState.userInfo.name,
-                    empId: gameState.userInfo.id,
-                    score: score,
-                    correctCount: correctCount,
-                    totalQuestions: TOTAL_QUESTIONS,
-                    timeTakenSeconds: timeTaken,
-                    timestamp: Date.now() 
-                };
-                let allLocalRes = JSON.parse(localStorage.getItem('thidaisu_results') || '[]');
-                allLocalRes.push(resObj);
-                localStorage.setItem('thidaisu_results', JSON.stringify(allLocalRes));
-            } catch (error) {}
-
-            isSaving = false;
-            gameState.isFinished = true;
+            isSaving = false; gameState.isFinished = true;
             document.getElementById('confirmModal').classList.add('hidden');
             
             document.getElementById('resultUserInfo').textContent = `Thí sinh: ${gameState.userInfo.name} - Mã: ${gameState.userInfo.id}`;
@@ -2091,124 +1803,114 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
             document.getElementById('scoreDisplay').textContent = score.toFixed(1);
             document.getElementById('timeTakenDisplay').textContent = `${minTaken} phút ${secTaken} giây`;
             
-            UI.screens.exam.classList.add('hidden');
+            UI.screens.exam.classList.add('hidden'); UI.screens.result.classList.remove('hidden');
+            document.body.classList.remove('bg-[#F8F9FA]'); document.body.classList.add('bg-gray-100');
+        }
+
+        // --- XEM LẠI BÀI LÀM ---
+        function showReviewScreen() {
+            UI.screens.result.classList.add('hidden');
+            UI.screens.review.classList.remove('hidden');
+            document.body.classList.remove('bg-gray-100');
+            document.body.classList.add('bg-[#F8F9FA]');
+
+            const container = document.getElementById('reviewContainer');
+            container.innerHTML = '';
+
+            const letters = ['A', 'B', 'C', 'D'];
+            
+            questionsData.forEach((q, qIndex) => {
+                const userAns = gameState.answers[qIndex];
+                const correctAns = q.correctAnswerIndex;
+                const isCorrect = userAns === correctAns;
+                
+                const qDiv = document.createElement('div');
+                qDiv.className = 'border border-gray-200 rounded-lg p-4 bg-gray-50';
+                
+                const titleHtml = `
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="font-bold text-gray-800 text-sm sm:text-base">Câu ${qIndex + 1}: ${q.content}</h4>
+                        <span class="ml-2 px-2.5 py-1 text-xs font-bold rounded-md whitespace-nowrap ${
+                            isCorrect ? 'bg-green-100 text-green-700' : 
+                            (userAns === null ? 'bg-gray-200 text-gray-600' : 'bg-red-100 text-red-700')
+                        }">${isCorrect ? 'ĐÚNG' : (userAns === null ? 'BỎ QUA' : 'SAI')}</span>
+                    </div>
+                `;
+                
+                let optionsHtml = '<div class="space-y-2">';
+                q.options.forEach((opt, optIndex) => {
+                    let optStyle = 'border-gray-300 text-gray-600';
+                    let iconHtml = '';
+                    
+                    if (optIndex === correctAns) {
+                        optStyle = 'border-green-500 bg-green-50 text-green-800 font-medium';
+                        iconHtml = `<svg class="w-5 h-5 text-green-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+                    } else if (optIndex === userAns && !isCorrect) {
+                        optStyle = 'border-red-400 bg-red-50 text-red-700 line-through';
+                        iconHtml = `<svg class="w-5 h-5 text-red-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+                    }
+                    
+                    optionsHtml += `
+                        <div class="flex items-start gap-2 p-2 border rounded-md text-sm ${optStyle}">
+                            <span class="font-bold shrink-0 mt-0.5">${letters[optIndex]}.</span>
+                            <span class="flex-1">${opt}</span>
+                            ${iconHtml}
+                        </div>
+                    `;
+                });
+                optionsHtml += '</div>';
+                qDiv.innerHTML = titleHtml + optionsHtml;
+                container.appendChild(qDiv);
+            });
+        }
+
+        function closeReviewScreen() {
+            UI.screens.review.classList.add('hidden');
             UI.screens.result.classList.remove('hidden');
             document.body.classList.remove('bg-[#F8F9FA]');
             document.body.classList.add('bg-gray-100');
         }
 
+        // --- XUẤT CSV ---
         function exportResultToCSV() {
             if(!gameState.isFinished) return;
             const timeTakenInSeconds = (EXAM_TIME_MINUTES * 60) - gameState.timeRemaining;
             const minutesTaken = Math.floor(timeTakenInSeconds / 60);
             const secondsTaken = timeTakenInSeconds % 60;
             
-            let correctCount = 0;
-            const letters = ['A', 'B', 'C', 'D'];
-            let detailRows = [];
-
+            let correctCount = 0; const letters = ['A', 'B', 'C', 'D']; let detailRows = [];
             for (let i = 0; i < TOTAL_QUESTIONS; i++) {
                 const userAnsIdx = gameState.answers[i];
                 const correctAnsIdx = questionsData[i].correctAnswerIndex;
                 const isCorrect = userAnsIdx === correctAnsIdx;
                 if (isCorrect) correctCount++;
-
                 const userAnsLetter = userAnsIdx !== null ? letters[userAnsIdx] : 'Chưa chọn';
                 const correctAnsLetter = letters[correctAnsIdx];
                 const statusStr = isCorrect ? 'Đúng' : (userAnsIdx === null ? 'Bỏ qua' : 'Sai');
                 detailRows.push(`${i + 1},${userAnsLetter},${correctAnsLetter},${statusStr}`);
             }
-
             const score = ((correctCount / TOTAL_QUESTIONS) * 10).toFixed(2);
             const dateStr = new Date().toLocaleString('vi-VN');
 
             let csvContent = "\uFEFF"; 
             csvContent += "THÔNG TIN KẾT QUẢ THI TRẮC NGHIỆM\n\n";
             csvContent += `Họ và tên:,${gameState.userInfo.name}\n`;
-            csvContent += `Mã NV:,${gameState.userInfo.id}\n`;
-            csvContent += `Nộp bài:,${dateStr}\n`;
-            csvContent += `Thời gian làm:,${minutesTaken} phút ${secondsTaken} giây\n`;
+            csvContent += `Mã CN/Phòng ban:,${gameState.userInfo.id}\n`;
+            csvContent += `Thời gian nộp bài:,${dateStr}\n`;
+            csvContent += `Thời gian làm bài:,${minutesTaken} phút ${secondsTaken} giây\n`;
             csvContent += `Số câu đúng:,${correctCount} / ${TOTAL_QUESTIONS}\n`;
             csvContent += `Điểm số:,${score} / 10\n\n`;
             csvContent += "CHI TIẾT BÀI LÀM\n";
-            csvContent += "Câu số,Đã chọn,Đáp án,Kết quả\n";
+            csvContent += "Câu số,Đáp án đã chọn,Đáp án đúng,Kết quả\n";
             csvContent += detailRows.join("\n");
 
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
             link.setAttribute("href", url);
-            link.setAttribute("download", `KetQua_${gameState.userInfo.name}_${gameState.userInfo.id}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function showReviewScreen() {
-            UI.screens.result.classList.add('hidden');
-            UI.screens.review.classList.remove('hidden');
-
-            const container = document.getElementById('reviewContainer');
-            if (container.children.length > 0) return; 
-
-            let html = '';
-            const letters = ['A', 'B', 'C', 'D'];
-
-            questionsData.forEach((q, qIndex) => {
-                const userAnsIdx = gameState.answers[qIndex];
-                const correctAnsIdx = q.correctAnswerIndex;
-                const isCorrect = userAnsIdx === correctAnsIdx;
-                const isSkipped = userAnsIdx === null;
-
-                let statusBadge = '';
-                if (isCorrect) {
-                    statusBadge = '<span class="bg-green-100 text-green-800 text-xs font-bold px-2.5 py-1 rounded border border-green-200 whitespace-nowrap">ĐÚNG</span>';
-                } else if (isSkipped) {
-                    statusBadge = '<span class="bg-gray-100 text-gray-800 text-xs font-bold px-2.5 py-1 rounded border border-gray-200 whitespace-nowrap">BỎ QUA</span>';
-                } else {
-                    statusBadge = '<span class="bg-red-100 text-red-800 text-xs font-bold px-2.5 py-1 rounded border border-red-200 whitespace-nowrap">SAI</span>';
-                }
-
-                let optionsHtml = '';
-                q.options.forEach((optText, optIndex) => {
-                    let optClass = 'p-3 border rounded-lg text-sm sm:text-base border-gray-200 text-gray-700';
-                    let iconHtml = '';
-                    
-                    if (optIndex === correctAnsIdx) {
-                        optClass = 'p-3 border-2 rounded-lg text-sm sm:text-base border-green-500 bg-green-50 font-medium text-green-800 flex justify-between items-center';
-                        iconHtml = '<svg class="w-5 h-5 text-green-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
-                    } else if (optIndex === userAnsIdx && !isCorrect) {
-                        optClass = 'p-3 border-2 rounded-lg text-sm sm:text-base border-red-400 bg-red-50 text-red-700 flex justify-between items-center line-through decoration-red-400';
-                        iconHtml = '<svg class="w-5 h-5 text-red-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
-                    }
-
-                    optionsHtml += `
-                        <div class="${optClass}">
-                            <div><span class="font-bold mr-1">${letters[optIndex]}.</span> ${optText}</div>
-                            ${iconHtml}
-                        </div>
-                    `;
-                });
-
-                html += `
-                    <div class="border border-gray-200 rounded-lg p-4 sm:p-5 bg-gray-50 mb-4">
-                        <div class="flex justify-between items-start mb-3 gap-3">
-                            <h3 class="font-bold text-gray-800 text-[15px] sm:text-base">Câu ${qIndex + 1}: <span class="font-normal">${q.content}</span></h3>
-                            <div class="shrink-0 mt-0.5">${statusBadge}</div>
-                        </div>
-                        <div class="space-y-2">
-                            ${optionsHtml}
-                        </div>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
-        }
-
-        function hideReviewScreen() {
-            UI.screens.review.classList.add('hidden');
-            UI.screens.result.classList.remove('hidden');
+            const safeName = gameState.userInfo.name.replace(/[^a-zA-Z0-9]/g, '_');
+            link.setAttribute("download", `Ket_Qua_${safeName}_${gameState.userInfo.id}.csv`);
+            document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
 
         window.addEventListener('DOMContentLoaded', initApp);
