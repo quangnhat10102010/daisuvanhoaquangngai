@@ -129,7 +129,7 @@
                 </div>
                 <h3 class="text-2xl font-bold text-gray-800 mb-2">Thông báo quan trọng</h3>
                 <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed text-lg">
-                    Kết quả thi của thí sinh được tự động gửi thẳng về <b>Google Sheet</b> của bạn để đảm bảo an toàn và không bị mất dữ liệu khi dùng điện thoại.<br><br>
+                    Kết quả thi của thí sinh được tự động gửi thẳng về <b>Google Form/Sheet</b> của bạn để đảm bảo an toàn và không bị mất dữ liệu khi dùng điện thoại.<br><br>
                     👉 Vui lòng mở file <b>Excel trên Google Drive</b> của bạn để xem toàn bộ danh sách điểm số nhé!
                 </p>
             </div>
@@ -275,6 +275,7 @@
     </div>
 
     <script type="module">
+        // === CẤU HÌNH LƯU KẾT QUẢ QUA GOOGLE FORM ===
         const GOOGLE_FORM_CONFIG = {
             enabled: true, 
             formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfcdscLJC-VRjqMdDE9Vacrk_8pMjeR6hE2wf5mQoGZawrh_g/formResponse", 
@@ -287,8 +288,8 @@
             }
         };
 
-        const RAW_TEXT = `
-Câu 1: Theo Quy định, khái niệm "Giám sát dữ liệu trên mạng xã hội và Internet" đối với Agribank bao gồm việc thu thập thông tin, thảo luận liên quan đến sản phẩm dịch vụ, thương hiệu, văn hóa, hoạt động của Agribank và các tổ chức khác nhằm mục đích nào sau đây?
+        // --- BỘ CÂU HỎI ---
+        const RAW_TEXT = `Câu 1: Theo Quy định, khái niệm "Giám sát dữ liệu trên mạng xã hội và Internet" đối với Agribank bao gồm việc thu thập thông tin, thảo luận liên quan đến sản phẩm dịch vụ, thương hiệu, văn hóa, hoạt động của Agribank và các tổ chức khác nhằm mục đích nào sau đây?
 A. Làm dữ liệu đầu vào phục vụ cho hoạt động nội bộ, hỗ trợ khách hàng qua kênh mạng xã hội, cảnh báo khủng hoảng và phân tích dữ liệu.
 B. Báo cáo trực tiếp lên Ngân hàng Nhà nước để điều chỉnh các chính sách lãi suất và tín dụng chung toàn ngành.
 C. Tổng hợp thông tin cạnh tranh thị phần để lập kế hoạch kinh doanh ngắn hạn cho từng phòng giao dịch trực thuộc.
@@ -1460,7 +1461,7 @@ D. Mã số nhân viên giới thiệu sản phẩm tại chi nhánh.
 Đáp án đúng: C 
 Câu 198: Kỳ hạn chuẩn được áp dụng để tính lãi suất cho sản phẩm Tiền gửi sinh lời thông minh theo quy định hiện hành là bao nhiêu? 
 A. Kỳ hạn 01 tuần.
-B. Kỳ hạn 01 tháng. 
+ B. Kỳ hạn 01 tháng. 
 C. Kỳ hạn 03 tháng. 
 D. Kỳ hạn 06 tháng. 
 Đáp án đúng: B 
@@ -1476,8 +1477,7 @@ B. Quy chế phát hành và sử dụng thẻ tín dụng quốc tế.
 C. Quy định về xử lý nợ xấu tại các tổ chức tín dụng. 
 D. Nội quy lao động áp dụng trong toàn hệ thống Agribank. 
 Đáp án đúng: A 
-
-`;
+`; // <--- Paste your 200 questions here.
 
         let questions = [];
         let currentQIdx = 0;
@@ -1488,6 +1488,7 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
         let timeLeft = timeTotal;
         let startTime;
 
+        // --- LOGIC PARSE VÀ XÁO TRỘN CÂU HỎI ---
         function parseRawText(text) {
             const qList = [];
             const lines = text.split('\n');
@@ -1530,6 +1531,7 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
 
         const el = id => document.getElementById(id);
 
+        // --- KHỞI TẠO ---
         window.onload = () => {
             el('firebaseLoading').style.display = 'none';
             questions = parseRawText(RAW_TEXT);
@@ -1548,7 +1550,7 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
                     el('adminScreen').classList.remove('hidden');
                     el('adminScreen').classList.add('flex');
                 } else {
-                    alert('Sai tài khoản hoặc mật khẩu!'); // Trình duyệt hỗ trợ cơ bản
+                    alert('Sai tài khoản hoặc mật khẩu!');
                 }
             };
 
@@ -1574,6 +1576,7 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
             el('btnCloseSidebar').onclick = el('sidebarOverlay').onclick = () => { el('rightSidebar').classList.add('translate-x-full'); el('sidebarOverlay').classList.add('hidden'); };
         };
 
+        // --- LOGIC LÀM BÀI ---
         function buildGrid() {
             const grid = el('questionGrid');
             grid.innerHTML = '';
@@ -1664,6 +1667,7 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
         el('btnCancelSubmit').onclick = () => el('confirmModal').classList.add('hidden');
         el('btnConfirmSubmit').onclick = () => finishExam();
 
+        // --- KẾT QUẢ VÀ NỘP BÀI ---
         let isSubmitting = false;
         function finishExam() {
             if(isSubmitting) return;
@@ -1731,6 +1735,7 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
             el('mobileTimerDisplay').innerText = `${m}:${s}`;
         }
 
+        // --- XEM LẠI BÀI LÀM VÀ XUẤT CSV ---
         el('btnReviewExam').onclick = () => {
             el('resultScreen').classList.add('hidden');
             el('resultScreen').classList.remove('flex');
@@ -1748,10 +1753,12 @@ D. Nội quy lao động áp dụng trong toàn hệ thống Agribank.
 
         function buildReviewScreen() {
             const container = el('reviewContainer');
-            container.innerHTML = '';
+            container.innerHTML = ''; // Clear previous content
+            
             questions.forEach((q, idx) => {
                 const userA = userAnswers[idx];
                 const isCorrect = userA === q.a;
+                
                 let html = `
                     <div class="border ${isCorrect ? 'border-green-200 bg-green-50/30' : 'border-red-200 bg-red-50/30'} rounded-xl p-4 sm:p-5">
                         <div class="flex items-start gap-3 mb-3">
